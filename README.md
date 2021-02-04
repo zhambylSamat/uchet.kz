@@ -26,36 +26,56 @@
 
 
 Urls and its description:
+
+	1) Login And Get Authoriation Token
+	Method: POST
+	URL: http://localhost:8000/api/auth/
+
+	2) Forgot password. Send message to email with token and link
+		Token will store on REDIS CACHE by 120 seconds
+	Method: POST
+	URL: http://localhost:8000/api/auth/forgot/password/
+
+	3) Change Password with body
+		{"password": "pwd", "confirm_password": "pwd"} 
+	Method: POST
+	URL: http://localhost:8000/api/auth/change/password/<user_pk>/<token>/
 	
-	1) POST http://localhost:8000/api/auth/		-> Login And Get Authoriation Token
-
-	2) POST http://localhost:8000/api/auth/forgot/password/		-> Forgot password. Send message to email with token and link
-																	Token will store on REDIS CACHE by 120 seconds
-
-	3) POST http://localhost:8000/api/auth/change/password/<user_pk>/<token>/		-> Change Password with body
-																						{"password": "pwd", "confirm_password": "pwd"} 
-
 	(All methods below need Header as "Authentication : Token <token>" for authentication)
 
-	4) POST http://localhost:8000/api/auth/logout/		-> Logout
+	4) Logout
+	Method: POST
+	URL: http://localhost:8000/api/auth/logout/
 
-	5) GET http://localhost:8000/api/todo/		-> Get list of all tasks
+	5) Get list of all tasks
+	Method: GET
+	URL: http://localhost:8000/api/todo/
 
-	6) GET http://localhost:8000/api/todo/<task_id>/		-> Get task by task_id
+	6) Get task by task_id
+	Method: GET
+	URL: http://localhost:8000/api/todo/<task_id>/
 
-	7) POST http://loalhost:8000/api/todo/		-> Create a new task with by default "is_executed = False" and with body 
-												{
-												    "title": "Some Title",
-												    "description": "This task for creating CRUD operations",
-												    "execution_date": "2020-12-12 12:00:00"
-												}
+	7) Create a new task with by default "is_executed = False" and with body 
+		{
+		    "title": "Some Title",
+		    "description": "This task for creating CRUD operations",
+		    "execution_date": "2020-12-12 12:00:00"
+		}
+	Method: POST
+	URL: http://loalhost:8000/api/todo/
 
-	8) PATCH http://localhost:8000/api/todo/<task_id>/		-> Update task by id with body
-															{
-																"title": "Another Some Task"
-															}
+	8) Update task by id with body
+		{
+			"title": "Another Some Task"
+		}
+	Method: PATCH
+	URL: http://localhost:8000/api/todo/<task_id>/
 
-	9) DELETE http://localhost:8000/api/todo/<task_id>/		-> Delete Task by task_id
+	9) Delete Task by task_id
+	Method: DELETE
+	URL: http://localhost:8000/api/todo/<task_id>/
 
-	10) POST http://localhost:8000/api/todo/<task_id>/execute/		-> Toggle execution for task by task_id
-																		And sms will be send with CELERY BY REDIS
+	10) Toggle execution for task by task_id
+		And sms will be send with CELERY BY REDIS
+	Method: POST
+	URL: http://localhost:8000/api/todo/<task_id>/execute/
